@@ -280,6 +280,10 @@ public class ManualInstrumentationFragment extends Fragment {
             @Override
             public void onClick(View view){
                 if (dialogTag.length() > 0) {
+                    Dynatrace.modifyUserAction(userAction -> {
+                        userAction.reportValue("Original Action Name", userAction.getActionName());
+                        userAction.setActionName("Touch on " + dialogTag);
+                    });
                     Pair tooltip = helper.getTooltip(dialogTag);
                     TooltipDialog dialog = new TooltipDialog((String) tooltip.first, (String) tooltip.second);
                     dialog.show(getParentFragmentManager(), dialogTag);
