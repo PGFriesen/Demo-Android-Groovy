@@ -1,0 +1,194 @@
+<resources>
+<!-- Titles -->
+    <string name="app_name">Dynatrace Android Tutorial</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_concepts">ConceptsActivity</string>
+    <string name="title_activity_instrumentation">InstrumentationActivity</string>
+
+
+<!-- Header Strings -->
+    <string name="tag_user">Tag your session!</string>
+    <string name="session">Sessions</string>
+    <string name="create_user_action">Create a Custom Action and Leave when complete</string>
+    <string name="add_children">Add Web Requests and Children Actions</string>
+    <string name="report_events">Report values and events</string>
+    <string name="crash_app">Crash App (divide by 0)</string>
+    <string name="topic">Topic</string>
+    <string name="concept">Concept</string>
+    <string name="caught_error">Catch Exception (Malformed URL)</string>
+    <string name="reporting">Report Events and Values</string>
+    <string name="crash_reporting">Crash Reporting and Error Handling</string>
+    <string name="user_action_monitoring">User Action Monitoring</string>
+    <string name="web_request_monitoring">Web Request Monitoring</string>
+    <string name="troubleshooting">Troubleshooting</string>
+
+
+<!-- Button Texts -->
+    <string name="enter_action">Enter Action</string>
+    <string name="leave_action">Leave Action</string>
+    <string name="change_button_text">Replace button text</string>
+    <string name="modify_user_action">Extend and Modify User Actions</string>
+    <string name="apply_tag">Apply Tag</string>
+    <string name="create_child_action">Create Child Action</string>
+    <string name="close_child_action">Close Child action</string>
+    <string name="web_request">Send Web Request</string>
+    <string name="leave_child">Leave child</string>
+    <string name="user_action">User Action</string>
+    <string name="request_url">https://search.dynatrace.com/#q=Android&amp;t=All</string>
+    <string name="instrumentation_banner">Instrumentation Sandbox</string>
+    <string name="concepts_banner">Concepts and Troubleshooting</string>
+    <string name="concepts">Concepts</string>
+    <string name="event">Event</string>
+    <string name="report_value">value</string>
+    <string name="note">Note</string>
+    <string name="report_error">error</string>
+    <string name="automatic_instrumentation">Automatic</string>
+    <string name="manual_instrumentation">Manual</string>
+    <string name="question_mark">?</string>
+    <string name="web_request_delay">Send Web Request(s) with a delay</string>
+    <string name="about">About this App</string>
+
+
+<!-- Hints -->
+    <string name="user_action_name">Enter a name for the user action</string>
+    <string name="user_tag">Enter User Tag</string>
+    <string name="url">Url</string>
+    <string name="delay">0 ms</string>
+    <string name="requests_to_send">1 call(s)</string>
+    <string name="change_url">Specify a URL</string>
+
+
+<!-- Content Descriptions -->
+    <string name="content_description_oneAgent">Dynatrace OneAgent Logo</string>
+    <string name="content_description_dynatrace">Dynatrace Logo</string>
+
+
+<!-- Menu Strings-->
+    <string name="session_property">Make a String session property</string>
+    <string name="session_property2">Make a Numeric session property</string>
+    <string name="action_property">Make a User Action Property</string>
+    <string name="end_visit">End Visit</string>
+
+
+<!-- String Arrays for Concepts -->
+    <string-array name="session_splitting_conditions">
+        <item>Application is terminated</item>
+        <item>200 User Action limit reached</item>
+        <item>30 minutes of inactivity</item>
+        <item>6 hours of session duration</item>
+    </string-array>
+
+    <string-array name="data_collection">
+        <item>OFF - Only a single user action will be reported for the application starting
+            as an anonymous user until data collection is enabled</item>
+        <item>PERFORMANCE - Performance data for the application is captured, but no data
+            will be used to uniquely identify the user</item>
+        <item>USER_BEHAVIOR - The user will be tracked across multiple visits and can be tagged
+            and have other SDK reported values and events associated with the session</item>
+    </string-array>
+
+    <string-array name="user_opt_in">
+        <item>Adjust DataCollectionLevel with SDK</item>
+        <item>userOptIn true - DataCollectionLevel is set to OFF until adjusted with the SDK</item>
+        <item>userOptIn false - DataCollectionLevel is set to USER_BEHAVIOR</item>
+    </string-array>
+
+    <string-array name="automatic_instrumentation">
+        <item>Dynatrace Android Gradle Plugin</item>
+        <item>User Actions</item>
+        <item>Web Requests</item>
+        <item>Lifecycle events are automatically recorded and timed</item>
+        <item>The Agent automatically records unhandled exceptions that result in application
+            crashes and immediately sends the crash report back to Dynatrace</item>
+    </string-array>
+
+    <string-array name="manual_instrumentation">
+        <item>Mobile SDK</item>
+        <item>User Actions</item>
+        <item>Web Requests</item>
+        <item>Users must be manually tagged with the identifyUser method.
+            See MainActivity.onTagSession for an example</item>
+        <item>Report Values and Events</item>
+    </string-array>
+
+    <string-array name="standalone_instrumentation">
+        <item>Absolutely no automatic instrumentation, app must be manually instrumented</item>
+        <item>The Mobile OneAgent must be manually started</item>
+    </string-array>
+
+    <string-array name="beacon_url">
+        <item>Cluster Activegate</item>
+        <item>Environment Activegate</item>
+        <item>Instrumented OneAgent Webserver</item>
+    </string-array>
+
+    <string-array name="sending_intervals">
+        <item>The Mobile Agent reports data back to the configured BeaconURL every 2 minutes</item>
+        <item>Data is stored for up to 10 minutes. If the Agent loses internet connection
+            or the BeaconURL becomes unavailable, it will attempt to re-send the data for up to
+            10 minutes at which point the data is discarded</item>
+    </string-array>
+
+    <string-array name="purepath_requirements">
+        <item>Web request must be associated with a User Action</item>
+        <item>Back-end Webserver process must be instrumented with a OneAgent</item>
+        <item>Request is tagged with the "x-dynatrace" header</item>
+    </string-array>
+
+<!-- String Arrays for Troubleshooting -->
+    <string-array name="no_data">
+        <item>Ensure the beaconUrl is reachable</item>
+        <item>Check the logs for any errors or exceptions when the agent sends data to the beaconUrl</item>
+        <item>Ensure the OneAgent is actually running and logs are seen</item>
+        <item>Ensure that the Application in the UI is capturing appropriate % of sessions with traffic control</item>
+    </string-array>
+
+    <string-array name="single_action">
+        <item>If sessions are appearing with only 1 user action each, this usually indicates "userOptIn true" was set
+        but the dataCollectionLevel was never adjusted</item>
+        <item>Run a test with userOptIn false</item>
+        <item>If userOptIn is true, ensure you are calling Dynatrace.applyUserPrivacyOptions</item>
+    </string-array>
+
+    <string-array name="missing_requests">
+        <item>The most common reason for missing web requests is that the request is made after the
+        user action has been closed, you can increase the timeout of user actions by setting
+        "userActions.timeout x" where x can be between 100-5000 (for ms)</item>
+        <item>Ensure that the request is made with a supported framework and does not show up
+        in another user action</item>
+    </string-array>
+
+    <string-array name="enable_logs">
+        <item>1. Set "debug.agentLogging true" in build.gradle configurations for Dynatrace</item>
+        <item>1.2 If manually starting the Agent, add ".withDebugLogging(true)" to startup call</item>
+        <item>2. Reproduce the issue in a session</item>
+        <item>3. Filter in logcat for "dtxAgent" to retrieve Dynatrace logs</item>
+        <item>4. Analyze</item>
+    </string-array>
+
+    <string-array name="analyze_logs">
+        <item>Look for "POST url" and "Response code: 200" to ensure data is getting sent to Dynatrace
+        and returning a 200 response</item>
+        <item>Use the "vi=&lt;VisitorId&gt;" to find the corresponding user in the UI, search in USQL using the
+        "User Tag" field and put the VisitorId value in quotes when searching</item>
+    </string-array>
+
+    <string-array name="crashes_or_unexpected_behavior">
+        <item>What conditions cause the issue? Identify any patterns and gather logs to create a support ticket</item>
+        <item>Try disabling instrumentation of sensors depending on issue</item>
+    </string-array>
+
+    <string-array name="build_logs">
+        <item>gradlew assemble&lt;Variant&gt; -d -s &gt; output_file.log 2&gt;&amp;1
+            \n\nEx: gradlew assembleDebug -d -s &gt; output_file.log 2&gt;&amp;1</item>
+        <item>If build errors do not identify the issue, create a support ticket with logs and config</item>
+    </string-array>
+
+    <string-array name="is_app_supported">
+        <item>Gradle 5.0+</item>
+        <item>Android Gradle Plugin 3.1+</item>
+        <item>Java 8+ for Android Gradle Plugin 3.1 - 4.2.2</item>
+        <item>Java 11+ for Android Gradle Plugin 7.0.0+</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="backgroundActivityPrimary" format="reference"/>
+    <attr name="backgroundActivitySecondary" format="reference"/>
+    <attr name="backgroundCard" format="reference"></attr>
+    <attr name="buttonDefault" format="reference"/>
+    <attr name="buttonTooltip" format="reference"/>
+    <attr name="textHeader" format="reference"/>
+    <attr name="textLarge" format="reference"/>
+    <attr name="textSmall" format="reference"/>
+    <attr name="textItem" format="reference"/>
+    <attr name="editTextBox" format="reference"/>
+    <attr name="layoutRow" format="reference"/>
+    <attr name="buttonPicker" format="reference"/>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="?backgroundActivityPrimary"
+    tools:context=".InstrumentationActivity">
+
+    <LinearLayout
+        android:id="@+id/layoutFragmentPicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingHorizontal="@dimen/view_horizontal_padding"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonFragmentAuto"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="?buttonPicker"
+            android:text="@string/automatic_instrumentation"
+            android:onClick="onReplaceFragment" />
+
+        <Button
+            android:id="@+id/buttonFragmentManual"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="?buttonPicker"
+            android:text="@string/manual_instrumentation"
+            android:onClick="onReplaceFragment" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayoutFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layoutFragmentPicker" />
+
+</RelativeLayout>

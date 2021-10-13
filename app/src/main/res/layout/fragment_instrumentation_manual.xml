@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    tools:context=".ManualInstrumentationFragment">
+
+    <RelativeLayout
+        android:id="@+id/scrollViewChild"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutCreateAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?backgroundCard">
+
+            <TextView
+                android:id="@+id/textViewUserActionBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/create_user_action"
+                android:gravity="center_horizontal"
+                style="?textLarge" />
+
+            <LinearLayout
+                android:id="@+id/linerLayoutUserAction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewUserActionBanner"
+                android:orientation="horizontal"
+                style="?layoutRow">
+
+                    <Button
+                        android:id="@+id/buttonActionHelp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:text="@string/question_mark"
+                        style="?buttonTooltip" />
+
+                    <EditText
+                        android:id="@+id/editTextUserActionName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="?editTextBox"
+                        android:hint="@string/user_action_name"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonEnterAction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?buttonDefault"
+                android:layout_below="@+id/linerLayoutUserAction"
+                android:text="@string/enter_action"
+                android:onClick="onFragmentButton"/>
+
+            <Button
+                android:id="@+id/buttonLeaveAction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?buttonDefault"
+                android:layout_below="@+id/buttonEnterAction"
+                android:enabled="false"
+                android:text="@string/leave_action"
+                android:onClick="onFragmentButton"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutChildrenActions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeLayoutCreateAction"
+            style="?backgroundCard">
+
+            <TextView
+                android:id="@+id/textViewChildActionBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_children"
+                android:gravity="center_horizontal"
+                style="?textLarge" />
+
+            <EditText
+                android:id="@+id/editTextURL"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/textViewChildActionBanner"
+                android:hint="@string/change_url"
+                android:inputType="textUri"
+                android:text="@string/request_url"
+                style="?editTextBox" />
+
+            <LinearLayout
+                android:id="@+id/linearLayoutWebRequests"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextURL"
+                android:orientation="horizontal"
+                style="?layoutRow">
+
+                <Button
+                    android:id="@+id/buttonManualWebRequestHelp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:text="@string/question_mark"
+                    style="?buttonTooltip"/>
+
+                <Button
+                    android:id="@+id/buttonManualWebRequest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?buttonDefault"
+                    android:onClick="onFragmentButton"
+                    android:enabled="false"
+                    android:text="@string/web_request" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutChildActions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayoutWebRequests"
+                android:orientation="horizontal"
+                style="?layoutRow">
+
+                <Button
+                    android:id="@+id/buttonChildActionHelp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:text="@string/question_mark"
+                    style="?buttonTooltip"/>
+
+                <Button
+                    android:id="@+id/buttonChildAction"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    style="?buttonDefault"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="2dp"
+                    android:text="@string/create_child_action"
+                    android:enabled="false"
+                    android:onClick="onFragmentButton" />
+
+                <Button
+                    android:id="@+id/buttonCloseChild"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    style="?buttonDefault"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="2dp"
+                    android:enabled="false"
+                    android:text="@string/close_child_action"
+                    android:onClick="onFragmentButton" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutEvents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeLayoutChildrenActions"
+            style="?backgroundCard">
+
+            <TextView
+                android:id="@+id/textViewEventsBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/report_events"
+                android:gravity="center_horizontal"
+                style="?textLarge" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewEventsBanner"
+                android:orientation="horizontal"
+                style="?layoutRow">
+
+                <Button
+                    android:id="@+id/buttonReportingHelp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:text="@string/question_mark"
+                    style="?buttonTooltip" />
+
+                <Button
+                    android:id="@+id/buttonReportValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="2dp"
+                    style="?buttonDefault"
+                    android:onClick="onFragmentButton"
+                    android:enabled="false"
+                    android:text="@string/report_value" />
+
+                <Button
+                    android:id="@+id/buttonReportEvent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="2dp"
+                    style="?buttonDefault"
+                    android:onClick="onFragmentButton"
+                    android:enabled="false"
+                    android:text="@string/event" />
+
+                <Button
+                    android:id="@+id/buttonReportError"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="2dp"
+                    style="?buttonDefault"
+                    android:onClick="onFragmentButton"
+                    android:enabled="false"
+                    android:text="@string/report_error" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

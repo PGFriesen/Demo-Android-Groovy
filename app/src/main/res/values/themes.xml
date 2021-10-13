@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Dynatrace.Dark" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="backgroundActivityPrimary">@style/background_dark_gray</item>
+        <item name="backgroundActivitySecondary">@style/background_gray</item>
+        <item name="buttonDefault">@style/button_green</item>
+        <item name="textHeader">@style/text_header_dark</item>
+        <item name="editTextBox">@style/editText_dark</item>
+    </style>
+
+    <style name="Theme.Dynatrace.Light" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="backgroundActivityPrimary">@style/background_white_gray</item>
+        <item name="backgroundCard">@style/card_view</item>
+        <item name="buttonDefault">@style/button_teal</item>
+        <item name="buttonPicker">@style/button_white</item>
+        <item name="buttonTooltip">@style/button_tooltip</item>
+        <item name="textHeader">@style/list_header</item>
+        <item name="textLarge">@style/text_large</item>
+        <item name="textSmall">@style/text_small</item>
+        <item name="textItem">@style/list_item</item>
+        <item name="editTextBox">@style/editText_light</item>
+        <item name="layoutRow">@style/layout_row</item>
+    </style>
+
+    <style name="Theme.Dynatrace.Light.Uem" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="backgroundActivityPrimary">@style/background_white_gray</item>
+        <item name="backgroundCard">@style/card_view</item>
+        <item name="buttonDefault">@style/button_violet</item>
+        <item name="buttonPicker">@style/button_white</item>
+        <item name="buttonTooltip">@style/button_tooltip</item>
+        <item name="textLarge">@style/text_large</item>
+        <item name="textSmall">@style/text_small</item>
+        <item name="editTextBox">@style/editText_light</item>
+        <item name="layoutRow">@style/layout_row</item>
+    </style>
+</resources>

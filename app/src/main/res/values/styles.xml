@@ -1,0 +1,128 @@
+<resources>
+
+    <!-- Backgrounds -->
+    <style name="background_default">
+        <item name="android:paddingVertical">@dimen/view_vertical_padding</item>
+        <item name="android:paddingHorizontal">@dimen/view_horizontal_padding</item>
+    </style>
+
+    <style name="background_dark_gray" parent="background_default">
+        <item name="android:background">@color/background_dark_gray</item>
+    </style>
+
+    <style name="background_gray" parent="background_default">
+        <item name="android:background">@color/background_gray</item>
+    </style>
+
+    <style name="background_light_gray" parent="background_default">
+        <item name="android:background">@color/gray_light</item>
+    </style>
+
+    <style name="background_white_gray" parent="background_default">
+        <item name="android:background">@color/gray_white</item>
+    </style>
+
+    <style name="card_view" parent="background_default">
+        <item name="android:background">@android:drawable/dialog_holo_light_frame</item>
+        <item name="android:layout_margin">@dimen/view_margin</item>
+    </style>
+
+
+
+    <!-- Layout Views and Lists -->
+    <style name="layout_row">
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="list_header">
+        <item name="android:paddingStart">@dimen/row_padding_right</item>
+        <item name="android:paddingEnd">@dimen/view_margin</item>
+        <item name="android:paddingVertical">@dimen/view_vertical_padding</item>
+        <item name="android:textSize">@dimen/text_size_header</item>
+        <item name="android:textColor">@color/gray_light</item>
+    </style>
+
+    <style name="list_item" parent="list_header">
+        <item name="android:paddingStart">@dimen/row_padding_left</item>
+        <item name="android:textSize">@dimen/text_size_med</item>
+        <item name="android:textColor">@color/gray_white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <!-- Text -->
+    <style name="text_default">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="text_large" parent="text_default">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="text_small" parent="text_default">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/dt_green</item>
+    </style>
+
+    <style name="text_header_dark" parent="text_default">
+        <item name="android:textSize">@dimen/text_size_header</item>
+        <item name="android:textColor">@color/dt_green_text</item>
+    </style>
+
+
+
+    <!-- Edit Text boxes -->
+    <style name="editText_default">
+        <item name="android:inputType">text</item>
+        <item name="android:importantForAutofill">no</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColorHint">@color/gray_light</item>
+    </style>
+
+    <style name="editText_dark" parent="editText_default">
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="editText_light" parent="editText_default">
+        <item name="backgroundTint">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+
+    <!-- Buttons -->
+    <style name="button_text_default">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:layout_marginHorizontal">@dimen/button_margin_horizontal</item>
+        <item name="android:layout_marginVertical">@dimen/button_margin_vertical</item>
+    </style>
+
+    <style name="button_teal" parent="button_text_default">
+        <item name="android:background">@drawable/button_teal</item>
+    </style>
+
+    <style name="button_green" parent="button_text_default">
+        <item name="android:background">@drawable/button_green</item>
+    </style>
+
+    <style name="button_white" parent="button_text_default">
+        <item name="android:background">@drawable/button_white</item>
+        <item name="android:textColor">@drawable/button_text</item>
+    </style>
+
+    <style name="button_violet" parent="button_text_default">
+        <item name="android:background">@drawable/button_violet</item>
+        <item name="android:textColor">@drawable/button_text_uem</item>
+    </style>
+
+    <style name="button_tooltip" parent="button_text_default">
+        <item name="android:background">@drawable/button_tooltip</item>
+        <item name="android:textSize">@dimen/text_size_med</item>
+    </style>
+
+</resources>

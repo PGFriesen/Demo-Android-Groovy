@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="?backgroundActivityPrimary"
+    android:paddingHorizontal="0dp"
+    tools:context=".ConceptsActivity">
+
+    <LinearLayout
+        android:id="@+id/layoutFragmentPicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingHorizontal="@dimen/view_horizontal_padding"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonConcepts"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="?buttonPicker"
+            android:text="@string/concepts"
+            android:onClick="onSwitchList"/>
+
+        <Button
+            android:id="@+id/buttonTroubleshooting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="?buttonPicker"
+            android:text="@string/troubleshooting"
+            android:onClick="onSwitchList"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layoutFragmentPicker"
+        android:fillViewport="true">
+
+        <ExpandableListView
+            android:id="@+id/expandableListViewConcepts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indicatorRight="?android:attr/expandableListPreferredChildIndicatorRight"
+            android:layoutDirection="rtl"
+            android:divider="@color/background_border_gray"
+            android:dividerHeight="2dp"
+            android:childDivider="@android:color/transparent">
+        </ExpandableListView>
+
+    </ScrollView>
+
+</RelativeLayout>

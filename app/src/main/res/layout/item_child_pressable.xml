@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_dark_gray"
+        android:padding="8dp"
+        android:gravity="center_vertical"
+        android:layoutDirection="ltr">
+
+        <Button
+            android:id="@+id/buttonInfoDialog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="?buttonDefault"
+            android:visibility="invisible"
+            android:enabled="false"
+            android:layout_weight="1"
+            android:text="@string/note"/>
+
+
+        <TextView
+            android:id="@+id/textViewInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:layout_marginStart="@dimen/button_margin_horizontal"
+            android:layout_marginBottom="@dimen/button_margin_vertical"
+            style="?textSmall"
+            android:gravity="start"
+            android:layout_gravity="start"
+            android:text="@string/concept" />
+
+    </TableRow>
+</TableLayout>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadeScrollbars="false">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutTagging"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?backgroundActivityPrimary">
+
+                <Button
+                    android:id="@+id/buttonAbout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?buttonDefault"
+                    android:text="@string/about" />
+
+                <TextView
+                    android:id="@+id/textViewTag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?textHeader"
+                    android:layout_below="@+id/buttonAbout"
+                    android:text="@string/tag_user"/>
+
+                <Button
+                    android:id="@+id/buttonTagUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?buttonDefault"
+                    android:layout_below="@+id/textViewTag"
+                    android:text="@string/apply_tag"
+                    android:onClick="onTagSession" />
+
+                <EditText
+                    android:id="@+id/textUserTag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?editTextBox"
+                    android:layout_alignBottom="@id/buttonTagUser"
+                    android:layout_toEndOf="@id/buttonTagUser"
+                    android:hint="@string/user_tag" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutInstrumentation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?backgroundActivitySecondary"
+                android:layout_below="@+id/relativeLayoutTagging"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/textViewInstrumentationBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?textHeader"
+                    android:text="@string/instrumentation_banner"/>
+
+                <ImageView
+                    android:id="@+id/imageInstrumentationActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/background_gray"
+                    app:tint="@color/dt_green"
+                    android:layout_below="@id/textViewInstrumentationBanner"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/content_description_oneAgent"
+                    app:srcCompat="@drawable/ic_dynatrace_shamrockgreen_700" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutConcepts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?backgroundActivityPrimary"
+                android:layout_below="@+id/relativeLayoutInstrumentation"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/textViewConceptsBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?textHeader"
+                    android:text="@string/concepts_banner" />
+
+                <ImageView
+                    android:id="@+id/imageConceptsActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/background_dark_gray"
+                    app:tint="@color/dt_green"
+                    android:layout_below="@id/textViewConceptsBanner"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/content_description_dynatrace"
+                    app:srcCompat="@drawable/ic_oneagent_gray_700" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
