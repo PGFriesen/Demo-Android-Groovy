@@ -1,12 +1,8 @@
 package com.dynatrace.sampleAndroid;
-import androidx.appcompat.app.ActionBar;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,8 +10,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.dynatrace.android.agent.Dynatrace;
-import com.dynatrace.android.agent.conf.DataCollectionLevel;
-import com.dynatrace.android.agent.conf.UserPrivacyOptions;
 
 public class InstrumentationActivity extends AppCompatActivity {
 
@@ -42,11 +36,17 @@ public class InstrumentationActivity extends AppCompatActivity {
     }
 
     /**
-     * Options Listener for the menu items
-     * Switch statement should provide cases for each item id in res/menu/menu_items.xml
+     * One of the automatically instrumented click listeners - Options Listener for the menu items
+     *
+     * In the InstrumentationActivity, this menu can be seen with the 3 dots in the top actionBar
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO (TASK) see 'Renaming Auto-Actions and reporting values / events'
+        /* The below switch statement gets called when a option is selected from the actionBar menu
+         in the InstrumentationActivity (the three elipses in the top-right corner on the activity)
+         for each case, report a value for the automatically detected user action to set up
+         as a session or user action property */
         switch (item.getItemId()) {
             case R.id.optionEndVisit:
                 Dynatrace.endVisit(); // Split your current session: Ends previous session and any new data will show up in a new session
@@ -84,9 +84,9 @@ public class InstrumentationActivity extends AppCompatActivity {
     }
 
     /**
-     * Custom click listener for the fragment-picking buttons
+     * Custom click listener for the fragment-selection buttons
      *
-     * @param view the view object for the button that was clicked
+     * @param view the view object for the button that was clicked (Automatic/Manual)
      */
     public void onReplaceFragment(View view){
         View otherView;

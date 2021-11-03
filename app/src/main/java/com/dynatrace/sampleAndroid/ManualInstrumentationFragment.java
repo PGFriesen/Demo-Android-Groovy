@@ -1,26 +1,20 @@
 package com.dynatrace.sampleAndroid;
 
-import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
-
 import com.dynatrace.android.agent.DTXAction;
 import com.dynatrace.android.agent.Dynatrace;
 import com.dynatrace.android.agent.WebRequestTiming;
-
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -30,7 +24,7 @@ public class ManualInstrumentationFragment extends Fragment {
     private View view;
     private DTXAction parentAction; // Currently open Parent User Action
     private ArrayList<DTXAction> childrenActions; // Array of any child actions
-    private int numberOfChildren;
+    private int numberOfChildren; // Counter for total number of children actions added to a parent
     private Random random = new Random();
     private OkHttpClient client;
     private TooltipHelper helper;
@@ -50,31 +44,36 @@ public class ManualInstrumentationFragment extends Fragment {
 
     /** 'Enter Action' button is pressed
     Manually Create a User Action with provided name */
-    private void onEnterAction(View v){
-        EditText userActionName = (EditText) view.findViewById(R.id.editTextUserActionName);
+    private boolean onEnterAction(View v){
+        String userActionName = ((EditText) view.findViewById(R.id.editTextUserActionName)).getText().toString();
+        boolean isSuccessful = false;
+        String toastMessage = "Give the user action a name";
 
-        if(userActionName.getText().toString().length() < 1){
-            t.toast(getActivity(), "Give the user action a name", Toast.LENGTH_SHORT);
-            return;
+        if(userActionName.length() > 0){
+            // TODO (Manually created User-Action)
+            parentAction = Dynatrace.enterAction(userActionName);
+
+            isSuccessful = true;
+            toastMessage = "User Action created with name: " + userActionName;
         }
-        // Create the Action
-        parentAction = Dynatrace.enterAction(userActionName.getText().toString());
 
-        numberOfChildren = 0;
-        t.toast(getActivity(), "User Action created with name: " + userActionName.getText().toString(), Toast.LENGTH_SHORT);
-
-        handleButtonDisplays(v);
+        t.toast(getActivity(), toastMessage, Toast.LENGTH_SHORT);
+        return isSuccessful;
     }
 
 
     /** 'Leave Action' button is pressed
     Manually leave the currently open action and clear the reference and array of child actions */
     private void onLeaveAction(){
-        // Leave the parent action which automatically closes any child actions associated
+        // TODO (Manually Leave User-Action)
         parentAction.leaveAction();
 
+        /* Clear the reference to the parentAction and the list of children actions
+        because they are automatically closed when parent is closed */
         parentAction = null;
-        childrenActions.clear(); // Clear the list of children actions because they are automatically closed when parent is closed
+        childrenActions.clear();
+        numberOfChildren = 0;
+
         t.toast(getActivity(), "Parent Action closed", Toast.LENGTH_SHORT);
     }
 
@@ -82,18 +81,24 @@ public class ManualInstrumentationFragment extends Fragment {
     /** 'Create Child Action' button is pressed
     Add a child action to the open parent action */
     private void onCreateChildAction(){
-        numberOfChildren ++; // Increment counter for total children actions for open parent action
+        // TODO (Manually created Child Action)
         DTXAction childAction = Dynatrace.enterAction("Child Action #" + String.valueOf(numberOfChildren), parentAction);
+
+        /* Add the child action to the list and increment the counter
+        (The total number of children can only increase, while the size of the list can decrease) */
         childrenActions.add(childAction);
+        numberOfChildren ++;
+
         t.toast(getActivity(), "Added Child Action #" + String.valueOf(numberOfChildren) , Toast.LENGTH_SHORT);
     }
 
 
     /** 'Close Child Action' button is pressed
-    Leave the most recently added child action */
+    Leave the most recently added child action, then remove it from the list */
     private void onLeaveChild(){
         childrenActions.get(childrenActions.size() - 1).leaveAction();
         childrenActions.remove(childrenActions.size() - 1);
+
         t.toast(getActivity(), "Closed most recently added child action" , Toast.LENGTH_SHORT);
     }
 
@@ -105,15 +110,16 @@ public class ManualInstrumentationFragment extends Fragment {
         Thread thread = new Thread(new Runnable(){
             @Override
             public void run() {
+                // TODO (Manually detected web request)
                 // Create the unique request tag value for the 'x-dynatrace' header, then create the timing object
                 String uniqueRequestTag = parentAction.getRequestTag();
                 WebRequestTiming timing = Dynatrace.getWebRequestTiming(uniqueRequestTag);
 
                 try {
-                    // Create the Request object with the URL and add the 'x-dynatrace' header with the uniqueRequestTag as the value
+                    // Create the Request object with the URL with headers
                     Request request = new Request.Builder()
                             .url(url)
-                            .addHeader(Dynatrace.getRequestTagHeader(), uniqueRequestTag)
+                            .addHeader(Dynatrace.getRequestTagHeader(), uniqueRequestTag) // Add the 'x-dynatrace' header with the uniqueRequestTag as the value
                             .build();
 
                     // Start the web request timer
@@ -151,6 +157,7 @@ public class ManualInstrumentationFragment extends Fragment {
     Report an event for the parent action */
     private void onReportEvent(){
         parentAction.reportEvent("Manually reported Event");
+
         t.toast(getActivity(), "Reported event: 'Manually reported Event'", Toast.LENGTH_SHORT);
     }
 
@@ -160,6 +167,7 @@ public class ManualInstrumentationFragment extends Fragment {
     private void onReportValue(){
         int k = random.nextInt();
         parentAction.reportValue("Manually reported value (random integer)", random.nextInt());
+
         t.toast(getActivity(), "Reported Value: " + String.valueOf(k) + " for key 'Manually reported value (random integer)'" , Toast.LENGTH_SHORT);
     }
 
@@ -171,6 +179,7 @@ public class ManualInstrumentationFragment extends Fragment {
             System.out.println(1/0);
         } catch (ArithmeticException e) {
             parentAction.reportError("Manually reported error", e);
+
             t.toast(getActivity(), "Reported Error: " + e.toString() + " with key 'Manually reported error'" , Toast.LENGTH_SHORT);
         }
     }
@@ -185,7 +194,9 @@ public class ManualInstrumentationFragment extends Fragment {
     public void onFragmentButton(View v){
         switch(v.getId()){
             case R.id.buttonEnterAction:
-                onEnterAction(v);
+                if(onEnterAction(v)){
+                    handleButtonDisplays(v);
+                };
                 break;
             case R.id.buttonLeaveAction:
                 onLeaveAction();
@@ -219,8 +230,8 @@ public class ManualInstrumentationFragment extends Fragment {
 
     /**
      * Helper function to help handle enabling and disabling of buttons (and color indicators)
-     * There are only 4 buttons which could enable or disable other buttons, enter and leave action
-     * and the same for child action enter/leave
+     * There are only 4 buttons which could enable or disable other buttons
+     * parent/child - enter/leave actions
      *
      * @param v The view object for the buttons
      */
@@ -259,6 +270,8 @@ public class ManualInstrumentationFragment extends Fragment {
      * Helper function to set click listeners for all tooltip buttons
      */
     private void setTooltips(){
+        this.helper = new TooltipHelper();
+
         // User Action Tooltip Button
         setActionName((Button) view.findViewById(R.id.buttonActionHelp), "Manual User Action Dialog");
         // Child Action Tooltip Button
@@ -284,9 +297,7 @@ public class ManualInstrumentationFragment extends Fragment {
                         userAction.reportValue("Original Action Name", userAction.getActionName());
                         userAction.setActionName("Touch on " + dialogTag);
                     });
-                    Pair tooltip = helper.getTooltip(dialogTag);
-                    TooltipDialog dialog = new TooltipDialog((String) tooltip.first, (String) tooltip.second);
-                    dialog.show(getParentFragmentManager(), dialogTag);
+                    helper.showDialog(getParentFragmentManager(), dialogTag);
                 }
             }
         });
@@ -299,12 +310,12 @@ public class ManualInstrumentationFragment extends Fragment {
     private void initializeFragment(){
         // Create the httpClient and tooltip helper
         this.client = new OkHttpClient();
-        this.helper = new TooltipHelper();
         this.t = new Toaster();
         setTooltips();
 
         // Initialize array for children actions
         this.childrenActions = new ArrayList<DTXAction>();
+        this.numberOfChildren = 0;
 
         // Map buttons for easier access
         this.viewMap = new HashMap<String, View>();

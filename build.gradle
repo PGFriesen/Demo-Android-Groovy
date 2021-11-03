@@ -6,11 +6,7 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.3"
-//        classpath 'com.dynatrace.tools.android:gradle-plugin:8.211.1.1010'
         classpath 'com.dynatrace.tools.android:gradle-plugin:8.+'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
@@ -31,8 +27,9 @@ dynatrace {
     configurations {
         sampleConfig {
             autoStart {
-                applicationId '0d8fd35f-9cb3-48a2-ba0e-2a7e8fa577c0'
-                beaconUrl 'https://bf04845dom.bf-dev.dynatracelabs.com/mbeacon'
+                // TODO (1) replace placeholders with values from your tenant 'Instrumentation Wizard' for the Mobile Application
+                applicationId '<applicationId placeholder>'
+                beaconUrl 'https://beaconUrlplaceholder.com/mbeacon'
             }
             userOptIn false
             agentBehavior.startupLoadBalancing true
@@ -41,116 +38,122 @@ dynatrace {
 }
 
 
-/** Below is an example configuration section that shows many of the basic settings with their
- * default values and extra comments detailing their use and other possible values
- *
- *  Some settings configure the Dynatrace Android Gradle PLUGIN which is what instruments the app at
- *  build time and adds the SDK Code to the app, and some settings configure the Android ONEAGENT
- *  which is the component that records the session during runtime and sends data to Dynatrace
- */
-//apply plugin: 'com.dynatrace.instrumentation'
-//dynatrace {
-//    configurations {
-//        sampleConfig {
+//  Below are example configurations with the default values followed by the possible range of values
+//  and brief summaries of what the configuration is used for
 //
-//            ////////////////////////////////////////////////////
-//            // DYNATRACE ANDROID GRADLE PLUGIN CONFIGURATIONS //
-//            //                                                //
-//            // These settings are used by the plugin during   //
-//            // the build process to automatically instrument  //
-//            // the application with the Dynatrace Mobile SDK  //
-//            ////////////////////////////////////////////////////
-//
-//            // Doc link: https://www.dynatrace.com/support/help/shortlink/dynatrace-android-gradle-plugin-instrumentation#auto-start-injection
-//            autoStart {
-//                enabled true // When set to false, OneAgent must be started manually and any settings to configure the OneAgent must be passed to that method
-//                applicationId '<appId>' // Configures OneAgent: No default value - tells Mobile OneAgent which application data is for
-//                beaconUrl '<beaconUrl>' // Configures OneAgent: No default value - tells Mobile OneAgent where to send data
-//            }
-//
-//            // Doc link: https://www.dynatrace.com/support/help/shortlink/dynatrace-android-gradle-plugin-monitoring#configure-user-action-monitoring
-//            userActions {
-//                enabled true // When set to false, the plugin does not instrument user actions during build
-//                timeout 500 // Possible values 100 - 5000 (ms) - Defines how long user actions will remain open if no events occur while action is open
-//                maxDuration 60000 // Possible values 100 - 540,000 (ms) - Defines the maximum amount of time a user action will remain open regardless of status for open events
-//            }
-//
-//            // Doc link: https://www.dynatrace.com/support/help/shortlink/dynatrace-android-gradle-plugin-monitoring#web-request-monitoring
-//            webRequests.enabled true // Web requests are automatically instrumented by the plugin, but if you want to manually instrument requests and associate with custom actions, set this to false
-//
-//            // Doc link: https://www.dynatrace.com/support/help/shortlink/dynatrace-android-gradle-plugin-monitoring#lifecycle-monitoring
-//            lifecycle.enabled true // Lifecycles are automatically instrumented by plugin. Set to false to deactivate lifecycle monitoring
-//
-//
-//
-//            ///////////////////////////////////////////////////
-//            //        MOBILE ONEAGENT CONFIGURATION S        //
-//            //                                               //
-//            // These are the settings that apply to the      //
-//            // OneAgent that is either started automatically //
-//            // by the plugin if autoStart.enabled is "true", //
-//            // otherwise these values must be passed to the  //
-//            // manual call to start the OneAgent             //
-//            ///////////////////////////////////////////////////
-//
-//            // Doc link: https://www.dynatrace.com/support/help/shortlink/dynatrace-android-gradle-plugin-oneagent#adjust-oneagent-behavior
-//            agentBehavior.startupLoadBalancing true // Enables client-side load balancing to avoid unbalanced load on server when multiple OneAgents establish connection to an Activegate
-//
-//            // Doc link: https://www.dynatrace.com/support/help/shortlink/dynatrace-android-gradle-plugin-oneagent#anchor_hybrid-apps
-//            hybridWebView{
-//                enabled false // Set to true and add in the domains you want to monitor for a webview
-//                domains '<domain1>', '<domain2>' // Specify the domains for web requests that should be associated with app
-//                domains '<anotherDomain>'
-//            }
-//
-//            // Doc link: https://www.dynatrace.com/support/help/shortlink/android-logging-oneagent#activate-debug-logging-mode
-//            debug.agentLogging false // Set to true to enable logging by the Mobile OneAgent that will appear in the "Logcat" tab at the bottom, filter on entries with "DTX" to see dynatrace logs
-//
-//            // Doc link: https://www.dynatrace.com/support/help/shortlink/dynatrace-android-gradle-plugin-monitoring#crash-reporting
-//            crashReporting true // Crash reporting is enabled by default to send crash reports to dynatrace immediatly when they occur, set to false to disable
-//
-//            // Doc link: https://www.dynatrace.com/support/help/shortlink/oneagent-sdk-for-android#data-privacy
-//            userOptIn false
-//
-//            userOptIn false sets the initial DataCollectionLevel to USER_BEHAVIOR and tracks the user accross multiple visits
-//            userOptIn true sets the initial DataCollectionLevel to OFF and creates an empty anonymous user session with a single User Action for the app starting
-//            */
-//        }
-//    }
-//}
-
+//  Some settings configure the Dynatrace Android Gradle PLUGIN which is what instruments the app at
+//  build time and adds the SDK Code to the app, and some settings configure the Android ONEAGENT
+//  which is the component that records the session during runtime and sends data to Dynatrace
 /**
- * Same "Default" config as above without comments
+ apply plugin: 'com.dynatrace.instrumentation'
+ dynatrace {
+     configurations {
+         sampleConfig {
+
+             ////////////////////////////////////////////////////
+             // DYNATRACE ANDROID GRADLE PLUGIN CONFIGURATIONS //
+             //                                                //
+             // These configurations are used by the plugin    //
+             // during the build process to define what gets   //
+             // automatically instrumented and whether or not  //
+             // the OneAgent is automatically started when the //
+             // application is ran                             //
+             ////////////////////////////////////////////////////
+
+             // Doc link: https://www.dynatrace.com/support/help/shortlink/dynatrace-android-gradle-plugin-instrumentation#auto-start-injection
+             autoStart {
+                 enabled true // When set to false, OneAgent must be started manually and any settings to configure the OneAgent must be passed to that method
+                 applicationId '<appId>' // Configures OneAgent: No default value - tells Mobile OneAgent which application data is for
+                 beaconUrl '<beaconUrl>' // Configures OneAgent: No default value - tells Mobile OneAgent where to send data
+             }
+
+             // Doc link: https://www.dynatrace.com/support/help/shortlink/dynatrace-android-gradle-plugin-monitoring#configure-user-action-monitoring
+             userActions {
+                 enabled true // When set to false, the plugin does not instrument user actions during build
+                 timeout 500 // Possible values 100 - 5000 (ms) - Defines how long user actions will remain open if no events occur while action is open
+                 maxDuration 60000 // Possible values 100 - 540,000 (ms) - Defines the maximum amount of time a user action will remain open regardless of status for open events
+             }
+
+             // Doc link: https://www.dynatrace.com/support/help/shortlink/dynatrace-android-gradle-plugin-monitoring#web-request-monitoring
+             webRequests.enabled true // Web requests are automatically instrumented by the plugin, but if you want to manually instrument requests and associate with custom actions, set this to false
+
+             // Doc link: https://www.dynatrace.com/support/help/shortlink/dynatrace-android-gradle-plugin-monitoring#lifecycle-monitoring
+             lifecycle.enabled true // Lifecycles are automatically instrumented by plugin. Set to false to deactivate lifecycle monitoring
+
+
+
+             ///////////////////////////////////////////////////
+             //        MOBILE ONEAGENT CONFIGURATIONS         //
+             //                                               //
+             // These are the settings that apply to the      //
+             // OneAgent that is either started automatically //
+             // by the plugin if autoStart.enabled is "true", //
+             // otherwise these values must be passed to the  //
+             // manual call to start the OneAgent             //
+             ///////////////////////////////////////////////////
+
+             // Doc link: https://www.dynatrace.com/support/help/shortlink/dynatrace-android-gradle-plugin-oneagent#adjust-oneagent-behavior
+             agentBehavior.startupLoadBalancing true // Enables client-side load balancing to avoid unbalanced load on server when multiple OneAgents establish connection to an Activegate
+
+             // Doc link: https://www.dynatrace.com/support/help/shortlink/dynatrace-android-gradle-plugin-oneagent#anchor_hybrid-apps
+             hybridWebView {
+                 enabled false // Set to true and add in the domains you want to monitor for a webview
+                 domains '<domain1>', '<domain2>' // Specify the domains for web requests that should be associated with app
+                 domains '<anotherDomain>'
+             }
+
+             // Doc link: https://www.dynatrace.com/support/help/shortlink/android-logging-oneagent#activate-debug-logging-mode
+             debug.agentLogging false // Set to true to enable logging by the Mobile OneAgent that will appear in the "Logcat" tab at the bottom, filter on entries with "DTX" to see dynatrace logs
+
+             // Doc link: https://www.dynatrace.com/support/help/shortlink/dynatrace-android-gradle-plugin-monitoring#crash-reporting
+             crashReporting true // Crash reporting is enabled by default to send crash reports to dynatrace immediatly when they occur, set to false to disable
+
+             // Doc link: https://www.dynatrace.com/support/help/shortlink/oneagent-sdk-for-android#data-privacy
+             userOptIn false // userOptIn is the setting that enables the OneAgent SDK to modify the DataCollectionLevel and when set to true, sets DataCollectionLevel to off until the SDK is used to enable sending of data
+
+         }
+     }
+ }
  */
 
-//apply plugin: 'com.dynatrace.instrumentation'
-//dynatrace {
-//    configurations {
-//        sampleConfig {
-//            userOptIn false
-//            autoStart {
-//                enabled true
-//                applicationId '<appId>'
-//                beaconUrl '<beaconUrl>'
-//            }
+
+//  This configuration section is the same as above, but without all of the comments
 //
-//            userActions {
-//                enabled true
-//                timeout 500
-//                maxDuration 60000
-//            }
+//  These are just the default values that are already used, and the only ones that need
+//  to be changed are the applicationId and beaconUrl.
 //
-//            webRequests.enabled true
-//            lifecycle.enabled true
-//            debug.agentLogging false
-//            crashReporting true
-//            agentBehavior.startupLoadBalancing true
-//
-//            hybridWebView{
-//                enabled false
-//                domains '<domain1>', '<domain2>'
-//                domains '<anotherDomain>'
-//            }
-//        }
-//    }
-//}
+//  This is the same as a configuration section that ONLY has the applicationId and beaconUrl
+/**
+ apply plugin: 'com.dynatrace.instrumentation'
+ dynatrace {
+     configurations {
+         sampleConfig {
+
+            userOptIn false
+            autoStart {
+                 enabled true
+                 applicationId '<appId>'
+                 beaconUrl '<beaconUrl>'
+            }
+
+             userActions {
+                 enabled true
+                 timeout 500
+                 maxDuration 60000
+             }
+
+             webRequests.enabled true
+             lifecycle.enabled true
+             debug.agentLogging false
+             crashReporting true
+             agentBehavior.startupLoadBalancing true
+
+             hybridWebView {
+                 enabled false
+                 domains '<domain1>', '<domain2>'
+                 domains '<anotherDomain>'
+             }
+         }
+     }
+ }
+ */
