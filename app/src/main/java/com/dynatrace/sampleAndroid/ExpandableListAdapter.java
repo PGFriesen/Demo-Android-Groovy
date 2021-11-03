@@ -17,6 +17,7 @@ import com.dynatrace.android.agent.DTXAction;
 import com.dynatrace.android.agent.Dynatrace;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
@@ -25,9 +26,23 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private ArrayList<String> topics;
     private Context context;
 
+    /**
+     * The Custom List Adapter for the expandable listview. This is a multi-tiered expandable listview
+     * where you expand one item from the top-level and it's children are their own expandable listviews
+     *
+     * @param m HashMap<Topic, HashMap<Concept, ArrayList<Notes>>>
+     *
+     * The hierarchy for the Expandable List Views is the following
+     *
+     *   Topic                           Sessions
+     *       Concept                         Session Splitting
+     *           Note                            Condition 1
+     *                                           Condition 2
+     */
     public ExpandableListAdapter(HashMap<String, HashMap<String, ArrayList<String>>> m, Context c){
         this.map = m;
         this.topics = new ArrayList<String>(map.keySet());
+        Collections.sort(topics);
         this.context = c;
     }
 
@@ -80,27 +95,37 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.item_topic, null);
         }
 
-        TextView topic = (TextView) convertView.findViewById(R.id.textViewTopic);
-        topic.setText(topics.get(groupPosition));
+        // Set the text for the Parent as the topic
+        ((TextView) convertView.findViewById(R.id.textViewTopic)).setText(topics.get(groupPosition));
 
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        // Create the child ListView
         ConceptExpandableListView conceptView = new ConceptExpandableListView(context);
 
+        // Get the list of Concepts for the current topic
         ArrayList<String> concepts = new ArrayList<String>(map.get(topics.get(groupPosition)).keySet());
         String concept = concepts.get(childPosition);
 
+        // Set the adapter for the Concept ListView and pass in the HashMap mapped to the Topic String
         conceptView.setAdapter(new ConceptListAdapter(concept, map.get(topics.get(groupPosition)).get(concept), context));
 
         return conceptView;
     }
 
+    /**
+     * When the dataset is changed (depending on viewing Concepts or Troubleshooting),
+     * the mapping  changes and we have to update the view
+     *
+     * @param newData the new dataset HashMap
+     */
     public void updateView(HashMap<String, HashMap<String, ArrayList<String>>> newData){
         this.map = newData;
         this.topics = new ArrayList<String>(newData.keySet());
+        Collections.sort(topics);
         notifyDataSetChanged();
     }
 
@@ -119,19 +144,27 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     /**
-     *
+     * Child ListView adapter that maps String values to String arrays (Concepts -> Notes)
      */
     public class ConceptListAdapter extends BaseExpandableListAdapter {
 
         private Context context;
         private String concept;
-        private ArrayList<String> points;
+        private ArrayList<String> notes;
         private TooltipHelper helper;
 
+        /**
+         * The ConceptListAdapter is for the "child" ListView within the "parent" ListView
+         *
+         * However, for this adapter, "Concepts" are the "parent" and "Notes" and the "children"
+         *
+         * @param s The Concept String
+         * @param a List of notes mapped to the given Concept
+         */
         public ConceptListAdapter(String s, ArrayList<String> a, Context c){
             this.context = c;
             this.concept = s;
-            this.points = a;
+            this.notes = a;
             this.helper = new TooltipHelper();
         }
 
@@ -142,7 +175,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            return points.size();
+            return notes.size();
         }
 
         @Override
@@ -172,7 +205,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         @Override
         public Object getChild(int groupPosition, int childPosition) {
-            return points;
+            return notes;
         }
 
 
@@ -183,8 +216,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 convertView = inflater.inflate(R.layout.item_concept, null);
             }
 
-            TextView info = (TextView) convertView.findViewById(R.id.textViewConcept);
-            info.setText(concept);
+            // Set the text for the "parent" as the Concept
+            ((TextView) convertView.findViewById(R.id.textViewConcept)).setText(concept);
 
             return convertView;
         }
@@ -196,68 +229,72 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 convertView = inflater.inflate(R.layout.item_child_pressable, null);
             }
 
-            // Set the message
-            String message = points.get(childPosition);
-            Button note = (Button) convertView.findViewById(R.id.buttonInfoDialog);
-            TextView info = (TextView) convertView.findViewById(R.id.textViewInfo);
-            info.setText(message);
+            // Set the text for the note
+            String message = notes.get(childPosition);
+            ((TextView) convertView.findViewById(R.id.textViewInfo)).setText(message);
 
-            // Should the child row have a clickable button?
+            // Hide the button by default...
+            Button button = (Button) convertView.findViewById(R.id.buttonInfoDialog);
+            button.setVisibility(View.INVISIBLE);
+            button.setEnabled(false);
+
+            // ...then enable it if it needs to be
             if(helper.hasClickable(message)){
-                note.setVisibility(View.VISIBLE);
-                note.setEnabled(true);
-                setTooltip(note, message, concept);
-            } else {
-                note.setVisibility(View.INVISIBLE);
-                note.setEnabled(false);
+                enableButton(button, message, concept);
             }
 
             return convertView;
         }
 
         /**
-         * Helper function to set the button for appropriate sections
+         * For Notes that should enable the button, set the button text and click listener to
+         * handle the functionality (All but one show a dialog)
          */
-        private void setTooltip(Button b, String tag, String concept){
+        private void enableButton(Button b, String tag, String concept){
+            b.setVisibility(View.VISIBLE);
+            b.setEnabled(true);
+            b.setText("Try it out");
 
             // "200 User Action limit reached" button is unique and not a dialog
             if (tag.contains("200 User Action limit reached")){
-                b.setText("Try it out");
                 b.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // Create 200 custom user actions to split the session
                         for (int i =0; i<200; i++){
                             DTXAction splitSessionAction = Dynatrace.enterAction("Action #" + String.valueOf(i));
                             splitSessionAction.leaveAction();
                         }
                     }
                 });
-            } else {
-                // Differentiate between Manual and Automatic User Action / Web Request Dialogue
-                if(concept.contains("Manual Instrumentation") && (tag.contains("User Actions") || tag.contains("Web Requests"))){
-                    tag = "Manual " + tag;
-                }
-
-                Pair tooltip = helper.getTooltip(tag);
-
-                b.setText("Note");
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle((String) tooltip.first)
-                                .setMessage((String)tooltip.second)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    }
-                                });
-                        Dialog dialog = builder.create();
-                        dialog.show();
-                    }
-                });
+                return;
             }
+
+            b.setText("Note");
+
+            // Differentiate between Manual and Automatic User Action / Web Request Dialogue
+            if(concept.contains("Manual Instrumentation") && (tag.contains("User Actions") || tag.contains("Web Requests"))){
+                tag = "Manual " + tag;
+            }
+
+            // Get title-message pair for note button dialog
+            Pair<String, String> tooltip = helper.getTooltip(tag);
+
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle(tooltip.first)
+                            .setMessage(tooltip.second)
+                            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            });
+                    Dialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
         }
     }
 }

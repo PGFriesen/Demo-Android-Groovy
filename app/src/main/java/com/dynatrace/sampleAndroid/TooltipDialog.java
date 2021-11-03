@@ -12,6 +12,7 @@ public class TooltipDialog extends AppCompatDialogFragment {
     private String title;
     private String message;
 
+    // Constructor that takes the title and message for the popup Dialog Window
     public TooltipDialog(String title, String message) {
         this.title = title;
         this.message = message;

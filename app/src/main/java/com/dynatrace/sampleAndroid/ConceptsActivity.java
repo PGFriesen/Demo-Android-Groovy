@@ -1,12 +1,5 @@
 package com.dynatrace.sampleAndroid;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +10,6 @@ public class ConceptsActivity extends AppCompatActivity {
     private static final String CONCEPTS = "concepts";
     private static final String TROUBLESHOOTING = "troubleshooting";
     private ExpandableListAdapter adapter;
-    private ExpandableListView expandableListView;
     private ConceptData data;
     private int lastPosition = -1;
 
@@ -27,12 +19,11 @@ public class ConceptsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_concepts);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        // Initialize Expandable ListView with data
+        // Initialize Expandable ListView with data and set the adapter
         this.data = new ConceptData(getResources());
-        this.expandableListView = findViewById(R.id.expandableListViewConcepts);
         this.adapter = new ExpandableListAdapter(data.getConceptData(), this);
 
+        ExpandableListView expandableListView = findViewById(R.id.expandableListViewConcepts);
         expandableListView.setAdapter(adapter);
 
         // Set the ExpandableListView to collapse other groups to avoid screen clutter
@@ -46,10 +37,14 @@ public class ConceptsActivity extends AppCompatActivity {
             }
         });
 
+        // Start on with the concepts selected
         onSwitchList(findViewById(R.id.buttonConcepts));
     }
 
-
+    /**
+     * When the user switches between the Concepts and Troubleshooting, we need to update the data
+     * and color the buttons accordingly
+     */
     public void onSwitchList(View view){
         View otherView;
         if (view.getId() == R.id.buttonConcepts){
