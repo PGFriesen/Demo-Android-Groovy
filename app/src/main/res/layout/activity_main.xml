@@ -48,12 +48,13 @@
 
                 <EditText
                     android:id="@+id/textUserTag"
+                    style="?editTextBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="?editTextBox"
                     android:layout_alignBottom="@id/buttonTagUser"
                     android:layout_toEndOf="@id/buttonTagUser"
-                    android:hint="@string/user_tag" />
+                    android:hint="@string/user_tag"
+                    android:minHeight="48dp" />
             </RelativeLayout>
 
             <RelativeLayout
