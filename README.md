@@ -1,6 +1,6 @@
 # Dynatrace Android Instrumentation Tutorial
-___
 
+___
 ## About this Mobile App
 <p>This demo app is intended as an example Android Mobile Application to be instrumented with Dynatrace<br>
 This readme file provides a basic tutorial with steps to instrument this app yourself as well as a general
