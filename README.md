@@ -8,6 +8,6 @@ overview of the application flow and code itself.<br><br>
 The application itself is relatively simple but still includes functionality that would be typical
 to find within a normal mobile application and serves as examples that are set up to be instrumented
 with the Dynatrace Android Gradle Plugin or via Manual Instrumentation with the SDK directly<br><br>
-Any and all feedback is appreciated just email me at <b>Paul.Friesen@dynatrace.com<b> and include the text
-<b>Getting Groovy with Android Mobile Monitoring<b> in the subject</p>
+Any and all feedback is appreciated just email me at <b>Paul.Friesen@dynatrace.com</b> and include the text
+<b>Getting Groovy with Android Mobile Monitoring</b> in the subject</p>
 ___
